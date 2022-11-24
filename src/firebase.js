@@ -1,6 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import "firebase/compat/firestore";
+import { deleteField, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyByE1BiZ43yK5or8cLImfXGWoKr9ezP270",
@@ -13,5 +13,15 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-export default firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+
+// firestore
+//   .collection("test")
+//   .doc("friend")
+//   .get()
+//   .then((doc) => {
+//     this.setState({
+//       data: doc.data().friend_count,
+//     });
+// });

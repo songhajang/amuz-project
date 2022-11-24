@@ -7,7 +7,7 @@ import Alarm from "./alarm";
 import Loading from "./loading";
 import Paging from "./pagination";
 import Write from "./write";
-import { db } from "./firebase";
+import { render } from "@testing-library/react";
 function Home() {
   const [isMatchMedia, setIsMatchMedia] = useState(false);
   const [styleMatchMedia, setStyleMatchMedia] = useState(false);
@@ -19,7 +19,6 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const pagePostList = async () => {
-    console.log(db);
     // try {
     //   const { data } = await axios.post(code);
     //   setData(data);
@@ -72,130 +71,129 @@ function Home() {
   };
 
   useEffect(() => {
-    if (window.innerWidth < "1600") {
-      setIsMatchMedia(true);
-      if (window.matchMedia("(max-width: 944px)").matches) {
-        setStyleMatchMedia(true);
-      } else setStyleMatchMedia(false);
-    } else setIsMatchMedia(false);
-
-    const listener = window.addEventListener("resize", () => {
-      if (window.matchMedia("(max-width: 1600px)").matches) {
-        setIsMatchMedia(true);
-        if (window.matchMedia("(max-width: 944px)").matches) {
-          setStyleMatchMedia(true);
-        } else setStyleMatchMedia(false);
-      } else setIsMatchMedia(false);
-    });
-
-    pagePostList();
-    return () => window.removeEventListener("resize", listener);
+    // if (window.innerWidth < "1600") {
+    //   setIsMatchMedia(true);
+    //   if (window.matchMedia("(max-width: 944px)").matches) {
+    //     setStyleMatchMedia(true);
+    //   } else setStyleMatchMedia(false);
+    // } else setIsMatchMedia(false);
+    // const listener = window.addEventListener("resize", () => {
+    //   if (window.matchMedia("(max-width: 1600px)").matches) {
+    //     setIsMatchMedia(true);
+    //     if (window.matchMedia("(max-width: 944px)").matches) {
+    //       setStyleMatchMedia(true);
+    //     } else setStyleMatchMedia(false);
+    //   } else setIsMatchMedia(false);
+    // });
+    // pagePostList();
+    // return () => window.removeEventListener("resize", listener);
   }, []);
-  return (
-    <>
-      <div
-        className="bgModal"
-        style={writeModal ? { display: "block" } : { display: "none" }}
-      >
-        <div className=" wh-Modal">
-          <button
-            id="closeBtn"
-            className="close"
-            onClick={onClickModal}
-            style={writeModal ? { display: "block" } : { display: "none" }}
-          ></button>
-          {writeLoading ? (
-            <Loading />
-          ) : (
-            <Write
-              setDescription={setDescription}
-              writePost={writePost}
-              onClickModal={onClickModal}
-              writeModal={writeModal}
-              description={description}
-            />
-          )}
-        </div>
-      </div>
 
-      <div
-        className="popUpIcon"
-        onClick={onClickModal}
-        style={
-          isMatchMedia
-            ? { transform: "translateX(0%)" }
-            : { transform: "translateX(200%)" }
-        }
-      >
-        +
-      </div>
+  // return (
+  //   <>
+  //      <div
+  //       className="bgModal"
+  //       style={writeModal ? { display: "block" } : { display: "none" }}
+  //     >
+  //       <div className=" wh-Modal">
+  //         <button
+  //           id="closeBtn"
+  //           className="close"
+  //           onClick={onClickModal}
+  //           style={writeModal ? { display: "block" } : { display: "none" }}
+  //         ></button>
+  //         {writeLoading ? (
+  //           <Loading />
+  //         ) : (
+  //           <Write
+  //             setDescription={setDescription}
+  //             writePost={writePost}
+  //             onClickModal={onClickModal}
+  //             writeModal={writeModal}
+  //             description={description}
+  //           />
+  //         )}
+  //       </div>
+  //     </div>
 
-      <div
-        className="popUp"
-        style={
-          isMatchMedia
-            ? { transform: "translateX(200%)" }
-            : { transform: "translateX(00%)" }
-        }
-      >
-        {writeLoading ? (
-          <Loading />
-        ) : (
-          <Write
-            setDescription={setDescription}
-            writePost={writePost}
-            writeModal={writeModal}
-            description={description}
-          />
-        )}
-      </div>
-      <section className="main">
-        <img src={logo} alt="컴과고로고" />
-        <h1>
-          컴과고 <br /> 대신 전해드립니다.
-        </h1>
-      </section>
-      <section className="alarm">
-        <Alarm title="글 작성할때 욕설은 금지입니다." />
-        <Alarm title="로그인 후 이용 부탁드립니다." />
-      </section>
-      <section
-        className="posts"
-        style={
-          styleMatchMedia
-            ? { justifyContent: "center" }
-            : { justifyContent: "flex-start" }
-        }
-      >
-        {postLoading ? (
-          <Loading />
-        ) : (
-          data.postList.map((data) => {
-            return (
-              <div key={data.postId}>
-                <Post
-                  data={data}
-                  // code={code}
-                  liked={data.likedPostId != null}
-                />
-              </div>
-            );
-          })
-        )}
-      </section>
-      <section className="pages">
-        <Paging
-          count={data.totalPost}
-          page={currentPage}
-          setPage={pagePostList}
-        />
-      </section>
-      <section className="footer">
-        <img src={footerLogo} alt="로고" />
-        <p>부산컴퓨터과학고등학교</p>
-      </section>
-    </>
-  );
+  //     <div
+  //       className="popUpIcon"
+  //       onClick={onClickModal}
+  //       style={
+  //         isMatchMedia
+  //           ? { transform: "translateX(0%)" }
+  //           : { transform: "translateX(200%)" }
+  //       }
+  //     >
+  //       +
+  //     </div>
+
+  //     <div
+  //       className="popUp"
+  //       style={
+  //         isMatchMedia
+  //           ? { transform: "translateX(200%)" }
+  //           : { transform: "translateX(00%)" }
+  //       }
+  //     >
+  //       {writeLoading ? (
+  //         <Loading />
+  //       ) : (
+  //         <Write
+  //           setDescription={setDescription}
+  //           writePost={writePost}
+  //           writeModal={writeModal}
+  //           description={description}
+  //         />
+  //       )}
+  //     </div>
+  //     <section className="main">
+  //       <img src={logo} alt="컴과고로고" />
+  //       <h1>
+  //         컴과고 <br /> 대신 전해드립니다.
+  //       </h1>
+  //     </section>
+  //     <section className="alarm">
+  //       <Alarm title="글 작성할때 욕설은 금지입니다." />
+  //       <Alarm title="로그인 후 이용 부탁드립니다." />
+  //     </section>
+  //     <section
+  //       className="posts"
+  //       style={
+  //         styleMatchMedia
+  //           ? { justifyContent: "center" }
+  //           : { justifyContent: "flex-start" }
+  //       }
+  //     >
+  //       {postLoading ? (
+  //         <Loading />
+  //       ) : (
+  //         data.postList.map((data) => {
+  //           return (
+  //             <div key={data.postId}>
+  //               <Post
+  //                 data={data}
+  //                 // code={code}
+  //                 liked={data.likedPostId != null}
+  //               />
+  //             </div>
+  //           );
+  //         })
+  //       )}
+  //     </section>
+  //     <section className="pages">
+  //       <Paging
+  //         count={data.totalPost}
+  //         page={currentPage}
+  //         setPage={pagePostList}
+  //       />
+  //     </section>
+  //     <section className="footer">
+  //       <img src={footerLogo} alt="로고" />
+  //       <p>부산컴퓨터과학고등학교</p>
+  //     </section>
+  //   </>
+  // );
 }
 
 export default Home;
