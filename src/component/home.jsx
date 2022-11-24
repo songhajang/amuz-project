@@ -7,7 +7,7 @@ import Alarm from "./alarm";
 import Loading from "./loading";
 import Paging from "./pagination";
 import Write from "./write";
-
+import { db } from "./firebase";
 function Home() {
   const [isMatchMedia, setIsMatchMedia] = useState(false);
   const [styleMatchMedia, setStyleMatchMedia] = useState(false);
@@ -17,23 +17,20 @@ function Home() {
   const [postLoading, setPostLoading] = useState(true);
   const [writeLoading, setWriteLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const code = process.env.REACT_APP_BACKEND_URL;
 
-  const pagePostList = async (page = 1) => {
-    setCurrentPage(page);
-    const pages = page - 1;
-    try {
-      const { data } = await axios.post(`${code}/posts/?page=${pages}`, {}, {
-        withCredentials: true,
-      });
-      setData(data.data);
-    } catch (err) {
-      console.log(err);
-      alert("글을 가져오는 중 원인 모를 오류 발생! 관리자에게 문의하세요.");
-    } finally {
-      setPostLoading(false);
-      setWriteLoading(false);
-    }
+  const pagePostList = async () => {
+    console.log(db);
+    // try {
+    //   const { data } = await axios.post(code);
+    //   setData(data);
+    //   console.log(data);
+    // } catch (err) {
+    //   // console.log(err);
+    //   alert("글을 가져오는 중 원인 모를 오류 발생! 관리자에게 문의하세요.");
+    // } finally {
+    //   setPostLoading(false);
+    //   setWriteLoading(false);
+    // }
   };
 
   const writePost = async (e) => {
@@ -41,20 +38,24 @@ function Home() {
     const writeTitle = e.target[0].value.length;
     if (writeTitle >= 5 && writeTitle <= 100) {
       setWriteLoading(true);
-      try {
-        await axios.post(`${code}/post/write`, { description }, { withCredentials: true });
-      } catch (err) {
-        if (err?.response?.status == 401) {
-          alert("로그인 후 이용해주십시오.");
-          window.location.href = "/login";
-          return;
-        }
-        if (err?.response?.data == "bad words") {
-          alert("욕설이 감지됐습니다.");
-          return;
-        }
-        alert("글 작성중 원인 모를 오류 발생! 관리자에게 문의하세요.");
-      }
+      // try {
+      //   await axios.post(
+      //     `${code}/post/write`,
+      //     { description },
+      //     { withCredentials: true }
+      //   );
+      // } catch (err) {
+      //   if (err?.response?.status == 401) {
+      //     alert("로그인 후 이용해주십시오.");
+      //     window.location.href = "/login";
+      //     return;
+      //   }
+      //   if (err?.response?.data == "bad words") {
+      //     alert("욕설이 감지됐습니다.");
+      //     return;
+      //   }
+      //   alert("글 작성중 원인 모를 오류 발생! 관리자에게 문의하세요.");
+      // }
 
       setPostLoading(true);
       setwriteModal(false);
@@ -172,7 +173,11 @@ function Home() {
           data.postList.map((data) => {
             return (
               <div key={data.postId}>
-                <Post data={data} code={code} liked={data.likedPostId != null} />
+                <Post
+                  data={data}
+                  // code={code}
+                  liked={data.likedPostId != null}
+                />
               </div>
             );
           })
