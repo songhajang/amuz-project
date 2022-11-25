@@ -15,13 +15,3 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-
-// firestore
-//   .collection("test")
-//   .doc("friend")
-//   .get()
-//   .then((doc) => {
-//     this.setState({
-//       data: doc.data().friend_count,
-//     });
-// });
