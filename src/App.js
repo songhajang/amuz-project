@@ -5,6 +5,7 @@ import Join from "./component/join";
 import Home from "./component/home";
 import "./index.css";
 
+// const Login = React.lazy(()=>{import('./component/login"');})
 function App() {
   return (
     <Routes>
