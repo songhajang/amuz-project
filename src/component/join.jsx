@@ -23,30 +23,32 @@ function Join() {
         }
       }
       if (password == isPassword) {
-        if (password.length > 6) {
-          if (email.includes("@") == 0) {
-            alert("이메일 전체를 입력해주세요");
-          } else {
-            await createUserWithEmailAndPassword(auth, email, password);
-            window.location.href = "/";
-          }
-        } else {
-          alert("비밀번호는 최소 (영문자+숫자) 6자 이상 입니다.");
-          isSetPassword("");
-          setPassword("");
-        }
+        await createUserWithEmailAndPassword(auth, email, password);
+        window.location.href = "/";
       } else {
         alert("비밀번호를 잘못입력하셨습니다. 다시 입력해주세요.");
         isSetPassword("");
       }
     } catch (err) {
-      console.log(err);
+      if (err.code == "auth/invalid-email") {
+        alert("이메일 전체를 입력해주세요");
+      }
+      if (err.code == "auth/email-already-in-use") {
+        alert("이미 가입한 아이디입니다.");
+        window.location.href = "/login";
+        isSetPassword("");
+        setPassword("");
+      }
+      if (err.code == "auth/weak-password") {
+        alert("비밀번호는 최소 (영문자+숫자) 6자 이상 입니다.");
+        isSetPassword("");
+        setPassword("");
+      }
     }
   };
 
   return (
     <div className="logBox">
-      {/* {isLoddined ? "로그인됨" : "안됨"} */}
       <h2>회원가입</h2>
       <input
         type="email"

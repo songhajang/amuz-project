@@ -23,16 +23,28 @@
   padding: 10px 20px;
 }
 .logBox button {
+  margin-top: 20px;
   border: none;
   color: white;
   background-color: #000;
   cursor: pointer;
 }
-#joinBtn {
+#joinHerf {
   font-size: 13px;
   color: #ccc;
   text-align: center;
 }
-#joinBtn:hover {
+#joinHerf:hover {
   color: #a1b8f5;
+}
+#loginHerf,
+button#logoutBtn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 8px 0;
+  display: inline-block;
+  text-align: center;
+  background-color: #000;
+  color: white;
+  font-size: 14px;
 }

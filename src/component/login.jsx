@@ -12,12 +12,25 @@ function Test() {
   const auth = getAuth();
 
   const signin = async (e) => {
-    const result = await signInWithEmailAndPassword(auth, email, password);
-    console.log(result);
-    // setIsLoddined(true);
-    setEmail("");
-    setPassword("");
-    window.location.href = "/";
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      console.log(result);
+      // setIsLoddined(true);
+      setEmail("");
+      setPassword("");
+      window.location.href = "/";
+    } catch (err) {
+      console.log(err.code);
+      if (err.code == "auth/user-not-found") {
+        alert("가입되지 않은 아이디입니다. 회원가입 후 이용해주세요.");
+        setEmail("");
+        setPassword("");
+      }
+      if (err.code == "auth/wrong-password") {
+        alert("비밀번호가 일치하지 않습니다.");
+        setPassword("");
+      }
+    }
   };
 
   return (
@@ -44,7 +57,7 @@ function Test() {
         }}
       />
 
-      <a href="/join" id="joinBtn">
+      <a href="/join" id="joinHerf">
         계정이 없으신가요? 회원가입하기
       </a>
       <button id="submitBtn" onClick={signin}>

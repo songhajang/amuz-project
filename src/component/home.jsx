@@ -27,9 +27,23 @@ function Home() {
   return (
     <div className="logBox">
       <h2>Home</h2>
-      {isLoddined ? `환영합니다.${email}` : "로그인 후 이용바랍니다."}
-      <a href="/login">로그인하기</a>
-      <button onClick={singout}>로그아웃</button>
+      {isLoddined ? (
+        <div>
+          <p>
+            환영합니다. <strong>{email}</strong>님.
+          </p>
+          <button id="logoutBtn" onClick={singout}>
+            로그아웃
+          </button>
+        </div>
+      ) : (
+        <div>
+          <p>로그인 후 이용 바랍니다.</p>
+          <a href="/login" id="loginHerf">
+            로그인하기
+          </a>
+        </div>
+      )}
     </div>
   );
 }
