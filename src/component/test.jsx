@@ -6,75 +6,46 @@ import { db } from "../firebase.js";
 // db에 접근해서 데이터를 꺼내게 도와줄 친구들
 import { collection, getDocs } from "firebase/firestore";
 
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  FirebaseAuth,
+} from "firebase/auth";
+
 function Test() {
-  const isIdData = [];
-  const isPwdData = [];
-  const test = [];
-  const [isData, isSetData] = useState([]);
-  // const [isIdDate, isSetIdDate] = useState([]);
-  // const [isPwdDate, isSetPwdDate] = useState([]);
-  const [isIdValue, isSetIdValue] = useState("");
-  const [isPwdValue, isSetpwdValue] = useState("");
-  const usersCollectionRef = collection(db, "login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSignup, setIsSignup] = useState(true);
+  const auth = getAuth();
+  const [isLoddined, setIsLoddined] = useState(false);
 
-  const getUsers = async () => {
-    // getDocs로 컬렉션안에 데이터 가져오기
-    const data = await getDocs(usersCollectionRef);
-    //   .docs[0]._document.data.value.mapValue.fields : db 값 경로
-    isSetData(data);
-
-    // isSetIdDate(isData.userId.stringValue);
-    // isSetpwdDate(isData.userPwd.stringValue);
+  const singout = async () => {
+    const res = await auth.signOut();
+    setIsLoddined(false);
+    setEmail("");
+    setPassword("");
   };
-  // console.log(isData);
+  // const signup = async (e) => {
+  //   // e.preventDefault();
+  //   const result = await createUserWithEmailAndPassword(auth, email, password);
+  //   console.log(result);
+  // };
 
-  const Onclick = (e) => {
-    e.preventDefault();
-    isSetIdValue(isIdValue);
-    isSetpwdValue(isPwdValue);
-    // console.log(isIdValue, isPwdValue);
-
-    isData.docs.map((data) => {
-      // isIdData.push(
-      //   data._document.data.value.mapValue.fields.userId.stringValue
-      // );
-      // isPwdData.push(
-      //   data._document.data.value.mapValue.fields.userPwd.stringValue
-      // );
-      test.push(data._document.data.value.mapValue.fields);
-      // test;
-    });
-    // const idTest = isIdData.filter((id) => {
-    //   if (id == isIdValue) {
-    //     console.log("hi");
-    //     if()
-    //   }
-    // });
-    test.filter((test) => {
-      if (
-        test.userId.stringValue == isIdValue &&
-        test.userPwd.stringValue == isPwdValue
-      ) {
-        return alert("로그인되엇습니다.");
-      }
-      if (
-        test.userId.stringValue == isIdValue &&
-        test.userPwd.stringValue !== isPwdValue
-      ) {
-        return alert("비밀번호가 틀렸습니다. 다시 입력해주세요");
-      }
-      if (test.userId.stringValue !== isIdValue) {
-        return alert("회원가입 후 이용 바랍니다.");
-      }
-    });
-    // console.log(test);
+  const signin = async (e) => {
+    // e.preventDefault();
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    console.log(result);
+    setIsLoddined(true);
+    setEmail("");
+    setPassword("");
   };
 
-  useEffect(() => {
-    getUsers();
-  }, []);
   return (
     <div className="login_card">
+      {isLoddined ? "로그인됨" : "안됨"}
       <div className="logo">
         <img
           src={logo}
@@ -86,15 +57,15 @@ function Test() {
         />
         <h2>컴과고 대전</h2>
       </div>
-      <form id="loginArea" onSubmit={Onclick}>
+      <div id="loginArea">
         <input
           type="text"
           id="loginId"
           name="loginId"
           placeholder="login"
-          value={isIdValue}
+          value={email}
           onChange={(e) => {
-            isSetIdValue(e.target.value);
+            setEmail(e.target.value);
           }}
         />
         <input
@@ -102,14 +73,22 @@ function Test() {
           id="password"
           name="password"
           placeholder="password"
-          value={isPwdValue}
+          value={password}
           onChange={(e) => {
-            isSetpwdValue(e.target.value);
+            setPassword(e.target.value);
           }}
         />
         <a href="/join">계정이 없으신가요? 회원가입하기</a>
-        <input type="submit" value="로그인" id="loginBtn" />
-      </form>
+        <button onClick={singout}>로그아웃</button>
+        <button
+          // type="submit"
+          // value="로그인"
+          // id="loginBtn"
+          onClick={signin}
+        >
+          로그인
+        </button>
+      </div>
     </div>
   );
 }
