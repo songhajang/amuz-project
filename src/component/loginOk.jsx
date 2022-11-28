@@ -16,6 +16,7 @@ import { collection, doc, getDocs } from "firebase/firestore";
 function LoginOk({ email, singout }) {
   const test = [];
   const [Data, setData] = useState([]);
+  const [CopyData, setCopyData] = useState([]);
   const [writeLoading, setWriteLoading] = useState(true);
   const [postLoading, setPostLoading] = useState(true);
 
@@ -27,17 +28,14 @@ function LoginOk({ email, singout }) {
     setwriteModal(!writeModal);
   };
   const getData = async () => {
-    // console.log("firebase 데이터 가져오기 시작");
     const data = getFirestore(app);
     const datas = await getDocs(collection(data, "post"));
     datas.forEach((docs) => {
       test.push(docs.data());
     });
-    // console.log("firebase 데이터 가져오기 완룐");
-    console.log(test);
     setData(test);
+    setCopyData([...Data].reverse());
   };
-
   useEffect(() => {
     getData();
 
@@ -123,7 +121,7 @@ function LoginOk({ email, singout }) {
         }
       >
         {postLoading ? (
-          Data.map((data) => (
+          CopyData.map((data) => (
             <div key={data.postId}>
               <Post data={data} />
             </div>
