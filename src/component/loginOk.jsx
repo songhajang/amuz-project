@@ -7,8 +7,15 @@ import Loading from "./loading";
 import Alarm from "./components/alarm";
 import Write from "./components/write";
 import Post from "./components/post";
+import app from "../firebase";
+import { getFirestore, setDoc } from "firebase/firestore";
+
+// import { collection } from "firebase/firestore";
+import { collection, doc, getDocs } from "firebase/firestore";
 
 function LoginOk({ email, singout }) {
+  const test = [];
+  const [Data, setData] = useState([]);
   const [writeLoading, setWriteLoading] = useState(true);
   const [postLoading, setPostLoading] = useState(true);
 
@@ -19,8 +26,21 @@ function LoginOk({ email, singout }) {
   const onClickModal = () => {
     setwriteModal(!writeModal);
   };
+  const getData = async () => {
+    // console.log("firebase 데이터 가져오기 시작");
+    const data = getFirestore(app);
+    const datas = await getDocs(collection(data, "post"));
+    datas.forEach((docs) => {
+      test.push(docs.data());
+    });
+    // console.log("firebase 데이터 가져오기 완룐");
+    console.log(test);
+    setData(test);
+  };
 
   useEffect(() => {
+    getData();
+
     if (window.innerWidth < "1600") {
       setIsMatchMedia(true);
       if (window.matchMedia("(max-width: 944px)").matches) {
@@ -102,7 +122,15 @@ function LoginOk({ email, singout }) {
             : { justifyContent: "flex-start" }
         }
       >
-        {postLoading ? <Post /> : <Loading />}
+        {postLoading ? (
+          Data.map((data) => (
+            <div key={data.postId}>
+              <Post data={data} />
+            </div>
+          ))
+        ) : (
+          <Loading />
+        )}
       </section>
       <section className="pages">
         <Paging />
