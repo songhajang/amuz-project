@@ -39,6 +39,27 @@ body::after {
   background: url(./img/bg2.png) no-repeat;
   background-size: 100%;
 }
+/* header */
+.header {
+  width: 100%;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  display: flex;
+  padding: 15px 30px 15px 100px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 1px 1px 20px 2px #ddd;
+  z-index: 9999;
+}
+#loginOutBtn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 13px;
+}
 /* loading 창 */
 .loading {
   text-align: center;
@@ -108,7 +129,7 @@ body::after {
   max-width: 380px;
   height: 500px;
   right: 40px;
-  top: 10%;
+  top: 15%;
   background-color: #e9efff;
   border-radius: 10px;
   box-sizing: border-box;

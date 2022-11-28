@@ -37,8 +37,7 @@
 #joinHerf:hover {
   color: #a1b8f5;
 }
-#loginHerf,
-button#logoutBtn {
+#loginHerf {
   width: 100%;
   margin-top: 20px;
   padding: 8px 0;

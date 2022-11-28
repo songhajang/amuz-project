@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import "./css/sign.css";
-import { db } from "../firebase.js";
+import "../firebase.js";
 // import { collection, getDocs } from "firebase/firestore";
 
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 function Test() {
   const [email, setEmail] = useState("");
@@ -21,12 +21,12 @@ function Test() {
       window.location.href = "/";
     } catch (err) {
       console.log(err.code);
-      if (err.code == "auth/user-not-found") {
+      if (err.code === "auth/user-not-found") {
         alert("가입되지 않은 아이디입니다. 회원가입 후 이용해주세요.");
         setEmail("");
         setPassword("");
       }
-      if (err.code == "auth/wrong-password") {
+      if (err.code === "auth/wrong-password") {
         alert("비밀번호가 일치하지 않습니다.");
         setPassword("");
       }
