@@ -148,8 +148,8 @@ function LoginOk({ email, singout }) {
         </h1>
       </section>
       <section className="alarm">
-        <Alarm title="글 작성할때 욕설은 금지입니다." />
-        <Alarm title="로그인 후 이용 부탁드립니다." />
+        <Alarm title="안녕하세요. 여긴 컴과고 익명 게시판입니다. 자유롭게 작성해주세용" />
+        <Alarm title="욕설은 금지입니다." />
       </section>
       <section
         className="posts"

@@ -6,7 +6,6 @@ function Alarm({ title }) {
         <span className="alarm-icon"></span>
         <p>{title}</p>
       </span>
-      <button className="close"></button>
     </div>
   );
 }
