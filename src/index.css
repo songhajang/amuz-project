@@ -127,7 +127,7 @@ body::after {
 .popUp {
   transition: all 0.5s;
   max-width: 380px;
-  height: 500px;
+  /* height: 500px; */
   right: 40px;
   top: 15%;
   background-color: #e9efff;

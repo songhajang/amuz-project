@@ -8,10 +8,9 @@ import Alarm from "./components/alarm";
 import Write from "./components/write";
 import Post from "./components/post";
 import app from "../firebase";
-import { getFirestore, setDoc } from "firebase/firestore";
-
-// import { collection } from "firebase/firestore";
-import { collection, doc, getDocs } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
+import { query, orderBy, limit } from "firebase/firestore";
 
 function LoginOk({ email, singout }) {
   const test = [];
@@ -34,19 +33,22 @@ function LoginOk({ email, singout }) {
     setWriteLoading(false);
     const data = getFirestore(app);
     const datas = await getDocs(collection(data, "post"));
+    // datas = query(data, orderBy("postTime", "desc"));
     datas.forEach((docs) => {
       test.push(docs.data());
     });
-    setData(test.reverse());
+    // const q = query(test, orderBy("postTime", "desc"), limit(3));
+    console.log(test);
+    setData(test);
     paging();
     setPostLoading(true);
     setWriteLoading(true);
   };
+  // console.log(Test);
 
-  const paging = () => {
+  const paging = async () => {
     setTest(Data.slice((currentPage - 1) * 15, currentPage * 15));
   };
-  console.log(Test);
 
   useEffect(() => {
     getData();
@@ -88,7 +90,17 @@ function LoginOk({ email, singout }) {
             onClick={onClickModal}
             style={writeModal ? { display: "block" } : { display: "none" }}
           ></button>
-          {writeLoading ? <Write /> : <Loading />}
+          {writeLoading ? (
+            <Write
+              onClickModal={onClickModal}
+              app={app}
+              writeModal={writeModal}
+              colseModal={setwriteModal}
+              getData={getData}
+            />
+          ) : (
+            <Loading />
+          )}
         </div>
       </div>
 
@@ -112,7 +124,16 @@ function LoginOk({ email, singout }) {
             : { transform: "translateX(00%)" }
         }
       >
-        {writeLoading ? <Write /> : <Loading />}
+        {writeLoading ? (
+          <Write
+            // onClickModal={onClickModal}
+            app={app}
+            writeModal={writeModal}
+            getData={getData}
+          />
+        ) : (
+          <Loading />
+        )}
       </div>
       <section className="main">
         <img src={logo} alt="컴과고로고" />

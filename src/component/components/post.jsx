@@ -3,8 +3,8 @@ import React from "react";
 
 function Post({ data, getData }) {
   if (data.length !== 0) {
-    return data.map((test) => (
-      <div className="post" key={test.postId}>
+    return data.map((test, index) => (
+      <div className="post" key={index}>
         <p>
           {test.postDate}
           <span></span>

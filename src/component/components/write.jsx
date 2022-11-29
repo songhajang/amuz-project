@@ -1,16 +1,23 @@
-import React from "react";
-function Write(
-  {
-    // writePost,
-    // setDescription,
-    // description,
-    // writeModal,
-    // onClickModal,
-  }
-) {
+import React, { useState } from "react";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
+
+function Write({ onClickModal, app, writeModal, getData }) {
+  const [addData, setAddData] = useState("");
+
+  const docRef = async (e) => {
+    e.preventDefault();
+    const db = getFirestore(app);
+    await addDoc(collection(db, "post"), {
+      postTitle: addData,
+      postDate: new Date().toISOString().split("T")[0],
+      postTime: new Date().toTimeString().split("GM")[0],
+    });
+    onClickModal();
+    getData();
+  };
+  // console.log(new Date().toTimeString().split("GM")[0]);
   return (
-    // onSubmit={writePost}
-    <form>
+    <form onSubmit={docRef}>
       <div className="popUp-div">
         <h1>글 작성</h1>
       </div>
@@ -20,22 +27,18 @@ function Write(
         cols="30"
         rows="10"
         placeholder="작성할 글을 입력해주세요."
-        // value={description}
-        // onChange={(e) => setDescription(e.target.value)}
+        value={addData}
+        onChange={(e) => setAddData(e.target.value)}
       ></textarea>
       <div className="popUp-div buttons">
         <input
           type="button"
           value="취소"
           className="cancellation"
-          // onClick={onClickModal}
-          //   style={writeModal ? { display: "block" } : { display: "none" }}
+          onClick={onClickModal}
+          style={writeModal ? { display: "block" } : { display: "none" }}
         />
         <input type="submit" value="게시" className="posting" />
-      </div>
-      <div className="login-box">
-        <a href="/login">로그인하러 가기</a>
-        <a href="/join">회원가입하러 가기</a>
       </div>
     </form>
   );
