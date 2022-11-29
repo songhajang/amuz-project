@@ -31,7 +31,6 @@ function LoginOk({ email, singout }) {
   const getData = async () => {
     setPostLoading(false);
     setWriteLoading(false);
-    // const datas = await getDocs(collection(data, "post"));
     const firebase = getFirestore(app);
     const datas = collection(firebase, "post");
 
@@ -44,7 +43,6 @@ function LoginOk({ email, singout }) {
     data.forEach((docs) => {
       test.push(docs.data());
     });
-    console.log(test);
     setData(test);
     setTest(test);
     paging();
