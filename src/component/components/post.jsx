@@ -13,6 +13,12 @@ function Post({ data, getData }) {
         <h1>{test.postTitle}</h1>
       </div>
     ));
+  } else if (data.length == 0) {
+    return (
+      <div className="resetGetData">
+        <p>데이터가 없슴니당 ! 글을 작성주세요</p>
+      </div>
+    );
   } else {
     return (
       <div className="resetGetData">

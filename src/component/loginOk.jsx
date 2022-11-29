@@ -96,7 +96,7 @@ function LoginOk({ email, singout }) {
           ></button>
           {writeLoading ? (
             <Write
-              onClickModal={onClickModal}
+              onClickModal={setwriteModal}
               app={app}
               writeModal={writeModal}
               colseModal={setwriteModal}

@@ -13,7 +13,9 @@ function Write({ onClickModal, app, writeModal, getData, setWriteLoading }) {
       postTime: new Date().toTimeString().split("GM")[0],
     });
     setWriteLoading(false);
-    onClickModal();
+    if (writeModal) {
+      onClickModal(false);
+    }
     getData();
     setAddData("");
   };
