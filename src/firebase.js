@@ -1,6 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-import { deleteField, getFirestore } from "firebase/firestore";
+// import { deleteField, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyByE1BiZ43yK5or8cLImfXGWoKr9ezP270",
