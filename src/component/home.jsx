@@ -5,7 +5,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import LoginOk from "./loginOk.jsx";
 import LoginOut from "./loginOut.jsx";
 function Home({ isLoddined, setIsLoddined }) {
-  // const [isLoddined, setIsLoddined] = useState(false);
   const [email, setEmail] = useState("");
 
   const auth = getAuth();
