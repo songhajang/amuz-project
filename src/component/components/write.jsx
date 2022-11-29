@@ -15,7 +15,6 @@ function Write({ onClickModal, app, writeModal, getData }) {
     onClickModal();
     getData();
   };
-  // console.log(new Date().toTimeString().split("GM")[0]);
   return (
     <form onSubmit={docRef}>
       <div className="popUp-div">

@@ -10,7 +10,7 @@ import Post from "./components/post";
 import app from "../firebase";
 import { getFirestore } from "firebase/firestore";
 import { collection, getDocs } from "firebase/firestore";
-import { query, orderBy, limit } from "firebase/firestore";
+import { query, orderBy } from "firebase/firestore";
 
 function LoginOk({ email, singout }) {
   const test = [];
@@ -31,16 +31,22 @@ function LoginOk({ email, singout }) {
   const getData = async () => {
     setPostLoading(false);
     setWriteLoading(false);
+    // const datas = await getDocs(collection(data, "post"));
     const data = getFirestore(app);
-    const datas = await getDocs(collection(data, "post"));
-    // datas = query(data, orderBy("postTime", "desc"));
-    datas.forEach((docs) => {
+    const datas = collection(data, "post");
+
+    const result = query(
+      datas,
+      orderBy("postDate", "desc"),
+      orderBy("postTime", "desc")
+    );
+    const tests = await getDocs(result);
+    tests.forEach((docs) => {
       test.push(docs.data());
     });
-    // const q = query(test, orderBy("postTime", "desc"), limit(3));
     console.log(test);
     setData(test);
-    paging();
+    // paging();
     setPostLoading(true);
     setWriteLoading(true);
   };
@@ -153,7 +159,7 @@ function LoginOk({ email, singout }) {
             : { justifyContent: "flex-start" }
         }
       >
-        {postLoading ? <Post data={Test} getData={getData} /> : <Loading />}
+        {postLoading ? <Post data={Data} getData={getData} /> : <Loading />}
       </section>
       <section className="pages">
         <Paging
