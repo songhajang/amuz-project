@@ -6,35 +6,41 @@ import "../firebase.js";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-function Test() {
+function Login({ setIsLoddined }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = getAuth();
 
   const signin = async (e) => {
+    e.preventDefault();
     try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      console.log(result);
-      // setIsLoddined(true);
+      await signInWithEmailAndPassword(auth, email, password);
+      setIsLoddined(true);
       setEmail("");
       setPassword("");
       window.location.href = "/";
     } catch (err) {
-      console.log(err.code);
+      // console.log(err.code);
       if (err.code === "auth/user-not-found") {
         alert("가입되지 않은 아이디입니다. 회원가입 후 이용해주세요.");
         setEmail("");
         setPassword("");
+        window.location.href = "/join";
       }
       if (err.code === "auth/wrong-password") {
         alert("비밀번호가 일치하지 않습니다.");
+        setPassword("");
+      }
+      if (err.code === "auth/invalid-email") {
+        alert("이메일 형식이 맞지않습니다. 이메일 전체를 입력해주세요");
+        setEmail("");
         setPassword("");
       }
     }
   };
 
   return (
-    <div className="logBox">
+    <form className="logBox">
       <h2>로그인</h2>
       <input
         type="text"
@@ -63,7 +69,7 @@ function Test() {
       <button id="submitBtn" onClick={signin}>
         로그인
       </button>
-    </div>
+    </form>
   );
 }
-export default Test;
+export default Login;

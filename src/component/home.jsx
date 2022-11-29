@@ -4,8 +4,8 @@ import "../firebase.js";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import LoginOk from "./loginOk.jsx";
 import LoginOut from "./loginOut.jsx";
-function Home() {
-  const [isLoddined, setIsLoddined] = useState(false);
+function Home({ isLoddined, setIsLoddined }) {
+  // const [isLoddined, setIsLoddined] = useState(false);
   const [email, setEmail] = useState("");
 
   const auth = getAuth();
@@ -25,7 +25,7 @@ function Home() {
         setEmail("");
       }
     });
-  }, []);
+  }, [setIsLoddined, auth]);
   return (
     <div>
       <h2>Home</h2>

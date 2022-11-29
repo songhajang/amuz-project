@@ -10,6 +10,7 @@ function Join() {
   const [isPassword, isSetPassword] = useState("");
   const auth = getAuth();
   const signup = async (e) => {
+    e.preventDefault();
     try {
       if (email === "" || email !== "") {
         if (email === "" && password === "") {
@@ -48,7 +49,7 @@ function Join() {
   };
 
   return (
-    <div className="logBox">
+    <form className="logBox" onSubmit={signup}>
       <h2>회원가입</h2>
       <input
         type="email"
@@ -82,8 +83,8 @@ function Join() {
         }}
       />
 
-      <button onClick={signup}>회원가입</button>
-    </div>
+      <button>회원가입</button>
+    </form>
   );
 }
 export default Join;
