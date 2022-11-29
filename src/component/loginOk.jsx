@@ -32,28 +32,28 @@ function LoginOk({ email, singout }) {
     setPostLoading(false);
     setWriteLoading(false);
     // const datas = await getDocs(collection(data, "post"));
-    const data = getFirestore(app);
-    const datas = collection(data, "post");
+    const firebase = getFirestore(app);
+    const datas = collection(firebase, "post");
 
     const result = query(
       datas,
       orderBy("postDate", "desc"),
       orderBy("postTime", "desc")
     );
-    const tests = await getDocs(result);
-    tests.forEach((docs) => {
+    const data = await getDocs(result);
+    data.forEach((docs) => {
       test.push(docs.data());
     });
     console.log(test);
     setData(test);
-    // paging();
+    setTest(test);
+    paging();
     setPostLoading(true);
     setWriteLoading(true);
   };
-  // console.log(Test);
 
   const paging = async () => {
-    setTest(Data.slice((currentPage - 1) * 15, currentPage * 15));
+    setTest(test.slice((currentPage - 1) * 15, currentPage * 15));
   };
 
   useEffect(() => {
@@ -103,6 +103,7 @@ function LoginOk({ email, singout }) {
               writeModal={writeModal}
               colseModal={setwriteModal}
               getData={getData}
+              setWriteLoading={setWriteLoading}
             />
           ) : (
             <Loading />
@@ -132,10 +133,11 @@ function LoginOk({ email, singout }) {
       >
         {writeLoading ? (
           <Write
-            // onClickModal={onClickModal}
+            onClickModal={onClickModal}
             app={app}
             writeModal={writeModal}
             getData={getData}
+            setWriteLoading={setWriteLoading}
           />
         ) : (
           <Loading />
@@ -159,7 +161,7 @@ function LoginOk({ email, singout }) {
             : { justifyContent: "flex-start" }
         }
       >
-        {postLoading ? <Post data={Data} getData={getData} /> : <Loading />}
+        {postLoading ? <Post data={Test} getData={getData} /> : <Loading />}
       </section>
       <section className="pages">
         <Paging

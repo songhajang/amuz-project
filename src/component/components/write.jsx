@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { collection, addDoc, getFirestore } from "firebase/firestore";
 
-function Write({ onClickModal, app, writeModal, getData }) {
+function Write({ onClickModal, app, writeModal, getData, setWriteLoading }) {
   const [addData, setAddData] = useState("");
 
   const docRef = async (e) => {
@@ -12,8 +12,10 @@ function Write({ onClickModal, app, writeModal, getData }) {
       postDate: new Date().toISOString().split("T")[0],
       postTime: new Date().toTimeString().split("GM")[0],
     });
+    setWriteLoading(false);
     onClickModal();
     getData();
+    setAddData("");
   };
   return (
     <form onSubmit={docRef}>
