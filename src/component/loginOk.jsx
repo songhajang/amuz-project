@@ -16,9 +16,10 @@ import { collection, doc, getDocs } from "firebase/firestore";
 function LoginOk({ email, singout }) {
   const test = [];
   const [Data, setData] = useState([]);
-  const [CopyData, setCopyData] = useState([]);
-  const [writeLoading, setWriteLoading] = useState(true);
-  const [postLoading, setPostLoading] = useState(true);
+  const [Test, setTest] = useState([]);
+  const [writeLoading, setWriteLoading] = useState(false);
+  const [postLoading, setPostLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [writeModal, setwriteModal] = useState(false);
   const [isMatchMedia, setIsMatchMedia] = useState(false);
@@ -27,18 +28,29 @@ function LoginOk({ email, singout }) {
   const onClickModal = () => {
     setwriteModal(!writeModal);
   };
+
   const getData = async () => {
+    setPostLoading(false);
+    setWriteLoading(false);
     const data = getFirestore(app);
     const datas = await getDocs(collection(data, "post"));
     datas.forEach((docs) => {
       test.push(docs.data());
     });
-    setData(test);
-    setCopyData([...Data].reverse());
+    setData(test.reverse());
+    paging();
+    setPostLoading(true);
+    setWriteLoading(true);
   };
+
+  const paging = () => {
+    setTest(Data.slice((currentPage - 1) * 15, currentPage * 15));
+  };
+  console.log(Test);
+
   useEffect(() => {
     getData();
-
+    paging();
     if (window.innerWidth < "1600") {
       setIsMatchMedia(true);
       if (window.matchMedia("(max-width: 944px)").matches) {
@@ -54,7 +66,7 @@ function LoginOk({ email, singout }) {
       } else setIsMatchMedia(false);
     });
     return () => window.removeEventListener("resize", listener);
-  }, []);
+  }, [currentPage]);
   return (
     <>
       <div className="header">
@@ -120,18 +132,14 @@ function LoginOk({ email, singout }) {
             : { justifyContent: "flex-start" }
         }
       >
-        {postLoading ? (
-          CopyData.map((data) => (
-            <div key={data.postId}>
-              <Post data={data} />
-            </div>
-          ))
-        ) : (
-          <Loading />
-        )}
+        {postLoading ? <Post data={Test} getData={getData} /> : <Loading />}
       </section>
       <section className="pages">
-        <Paging />
+        <Paging
+          count={Data.length}
+          page={currentPage}
+          setPage={setCurrentPage}
+        />
       </section>
       <section className="footer">
         <img src={footerLogo} alt="로고" />
