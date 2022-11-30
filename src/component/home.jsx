@@ -9,12 +9,14 @@ function Home({ isLoddined, setIsLoddined }) {
 
   const auth = getAuth();
 
+  // 로그아웃 함수
   const singout = async () => {
     await auth.signOut();
     setIsLoddined(false);
   };
 
   useEffect(() => {
+    // firebase auth 상태 확인
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLoddined(true);

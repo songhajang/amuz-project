@@ -2,15 +2,14 @@ import React from "react";
 import { useState } from "react";
 import "./css/sign.css";
 import "../firebase.js";
-// import { collection, getDocs } from "firebase/firestore";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
 function Login({ setIsLoddined }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = getAuth();
 
+  // auth 로그인 함수
   const signin = async (e) => {
     e.preventDefault();
     try {

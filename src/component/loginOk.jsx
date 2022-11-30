@@ -13,9 +13,9 @@ import { collection, getDocs } from "firebase/firestore";
 import { query, orderBy } from "firebase/firestore";
 
 function LoginOk({ email, singout }) {
-  const test = [];
+  const dataArr = [];
   const [Data, setData] = useState([]);
-  const [Test, setTest] = useState([]);
+  const [postData, setPostData] = useState([]);
   const [writeLoading, setWriteLoading] = useState(false);
   const [postLoading, setPostLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,42 +27,46 @@ function LoginOk({ email, singout }) {
   const onClickModal = () => {
     setwriteModal(!writeModal);
   };
-
+  // 데이터 들고오는 함수
   const getData = async () => {
     setPostLoading(false);
     setWriteLoading(false);
     const firebase = getFirestore(app);
     const datas = collection(firebase, "post");
 
+    // 데이터 내림차순 정렬
     const result = query(
       datas,
       orderBy("postDate", "desc"),
       orderBy("postTime", "desc")
     );
+    // 정렬된 데이터 들고오기
     const data = await getDocs(result);
     data.forEach((docs) => {
-      test.push(docs.data());
+      dataArr.push(docs.data());
     });
-    setData(test);
-    setTest(test);
+    setData(dataArr);
+    setPostData(dataArr);
     paging();
     setPostLoading(true);
     setWriteLoading(true);
   };
-
+  // 페이지 나누기 함수
   const paging = async () => {
-    setTest(test.slice((currentPage - 1) * 15, currentPage * 15));
+    setPostData(dataArr.slice((currentPage - 1) * 15, currentPage * 15));
   };
 
   useEffect(() => {
     getData();
     paging();
+    // 반응형 첫 화면 반응
     if (window.innerWidth < "1600") {
       setIsMatchMedia(true);
       if (window.matchMedia("(max-width: 944px)").matches) {
         setStyleMatchMedia(true);
       } else setStyleMatchMedia(false);
     } else setIsMatchMedia(false);
+    // 반응형
     const listener = window.addEventListener("resize", () => {
       if (window.matchMedia("(max-width: 1600px)").matches) {
         setIsMatchMedia(true);
@@ -159,7 +163,7 @@ function LoginOk({ email, singout }) {
             : { justifyContent: "flex-start" }
         }
       >
-        {postLoading ? <Post data={Test} getData={getData} /> : <Loading />}
+        {postLoading ? <Post data={postData} getData={getData} /> : <Loading />}
       </section>
       <section className="pages">
         <Paging

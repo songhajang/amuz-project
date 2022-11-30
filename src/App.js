@@ -6,8 +6,8 @@ import Home from "./component/home";
 import "./index.css";
 import { useState } from "react";
 
-// const Login = React.lazy(()=>{import('./component/login"');})
 function App() {
+  // 로그인 상태
   const [isLoddined, setIsLoddined] = useState(false);
   return (
     <Routes>

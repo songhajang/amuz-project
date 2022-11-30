@@ -9,6 +9,7 @@ function Join() {
   const [password, setPassword] = useState("");
   const [isPassword, isSetPassword] = useState("");
   const auth = getAuth();
+  // auth 회원가입 함수
   const signup = async (e) => {
     e.preventDefault();
     try {
