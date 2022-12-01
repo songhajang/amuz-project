@@ -9,6 +9,9 @@ function Write({ onClickModal, app, writeModal, getData, setWriteLoading }) {
   // firestore 문서 추가 함수
   const docRef = async (e) => {
     e.preventDefault();
+    if (addData === "") {
+      return alert("작성할 글을 입력한 후 게시해주세요.");
+    }
     const db = getFirestore(app);
     await addDoc(collection(db, "post"), {
       postTitle: addData,
