@@ -156,11 +156,11 @@ function LoginOk({ email, singout }) {
       <section className="main">
         <img src={logo} alt="컴과고로고" />
         <h1>
-          컴과고 <br /> 대신 전해드립니다.
+          송하가 <br /> 대신 전해드립니다.
         </h1>
       </section>
       <section className="alarm">
-        <Alarm title="안녕하세요. 여긴 컴과고 익명 게시판입니다." />
+        <Alarm title="안녕하세요. 여긴 송하의 익명 게시판입니다." />
         <Alarm title="자유롭게 작성해주세용." />
       </section>
       <section
