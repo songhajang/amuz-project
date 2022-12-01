@@ -146,6 +146,11 @@ body::after {
   justify-content: flex-end;
   margin: 20px 0;
 }
+.countTitle {
+  font-size: 13px;
+  color: #3b53a3;
+  padding-left: 8px;
+}
 textarea {
   border: 2px solid #3b53a3;
   box-sizing: border-box;
