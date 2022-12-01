@@ -21,7 +21,9 @@ function LoginOk({ email, singout }) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [writeModal, setwriteModal] = useState(false);
+  // write 반응
   const [isMatchMedia, setIsMatchMedia] = useState(false);
+  // post 반응
   const [styleMatchMedia, setStyleMatchMedia] = useState(false);
 
   const onClickModal = () => {
@@ -65,7 +67,10 @@ function LoginOk({ email, singout }) {
       if (window.matchMedia("(max-width: 944px)").matches) {
         setStyleMatchMedia(true);
       } else setStyleMatchMedia(false);
-    } else setIsMatchMedia(false);
+    } else {
+      setIsMatchMedia(false);
+      setwriteModal(false);
+    }
     // 반응형
     const listener = window.addEventListener("resize", () => {
       if (window.matchMedia("(max-width: 1600px)").matches) {
@@ -73,7 +78,10 @@ function LoginOk({ email, singout }) {
         if (window.matchMedia("(max-width: 944px)").matches) {
           setStyleMatchMedia(true);
         } else setStyleMatchMedia(false);
-      } else setIsMatchMedia(false);
+      } else {
+        setIsMatchMedia(false);
+        setwriteModal(false);
+      }
     });
     return () => window.removeEventListener("resize", listener);
   }, [currentPage]);
@@ -152,8 +160,8 @@ function LoginOk({ email, singout }) {
         </h1>
       </section>
       <section className="alarm">
-        <Alarm title="안녕하세요. 여긴 컴과고 익명 게시판입니다. 자유롭게 작성해주세용" />
-        <Alarm title="욕설은 금지입니다." />
+        <Alarm title="안녕하세요. 여긴 컴과고 익명 게시판입니다." />
+        <Alarm title="자유롭게 작성해주세용." />
       </section>
       <section
         className="posts"
